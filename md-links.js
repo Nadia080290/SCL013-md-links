@@ -64,5 +64,5 @@ const getLinks = (path) => {
         })
     }
     getLinks(path)
-    //console.log(getLinks(path))
+
 
