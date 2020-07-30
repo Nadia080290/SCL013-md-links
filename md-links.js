@@ -3,6 +3,7 @@ const Marked = require ('marked');
 //const fetch = require('fetch');
 const pathN = require('path')
 const process = require('process');
+const chalk = require('chalk');
 
 
 let path = process.argv[2]
@@ -54,7 +55,11 @@ const getLinks = (path) => {
         Marked(res,{renderer:renderer})
         resolve(links)
         links = filtLinks(links);
-        console.log(links)
+        links.map(element =>{console.log(`
+${chalk.green("href: "+element.href)}
+${chalk.yellow("text :"+element.text)}
+${chalk.magenta("path :"+element.path)}
+        `)});
 
           })
           .catch(err =>{
@@ -64,5 +69,3 @@ const getLinks = (path) => {
         })
     }
     getLinks(path)
-    //console.log(getLinks(path))
-
