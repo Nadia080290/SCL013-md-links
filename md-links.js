@@ -1,6 +1,6 @@
 const fs = require ('fs');
 const Marked = require ('marked');
-//const fetch = require('fetch');
+const fetch = require('fetch');
 const pathN = require('path')
 const process = require('process');
 const chalk = require('chalk');
@@ -70,20 +70,29 @@ ${chalk.magenta("path :"+element.path)}
     }
     getLinks(path)
 
-    const validateLinks = (link) =>{
-      return new Promise((resolve, reject) => {
-          let fetchLinks = link.map(v=>{
-            return fetch(v.href).then(res =>{
-                v.status=res.statusText;
-                v.statusCode = res.status;
+    let validate = () => {
+      //let promiseFetch = new Promise((resolve ,reject)=>{
+        getLinks().then((links) => {
+          links.map(e => {
+              return fetch(e.href).then(res => {
+                  // v.status=res.statusText;
+                  if (res.ok) {
+                      console.log(e.href + res.status);
+                      console.log(res.statusText);
+                      // v.statusCode = res.status;
+                  } else {
+                      console.log(e.href + res.status)
+                      console.log(res.statusText);
+                  }
+              }).catch((err) => {
+                  console.log(err.statusText);
+                  // v.status = err
+              });
 
-              }).catch((err)=>{
-                v.status = err
-              })
-          })
-          Promise.all(fetchLinks).then(res=>{
-            resolve(link)
-          })
-        })
-    }
+          });
+
+      })
+
+  }
+  validate();
 

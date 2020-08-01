@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "chalk": "^4.1.0",
+    "fetch": "^1.1.0",
     "filehound": "^1.17.4",
     "markdown-link-extractor": "^1.2.3",
     "marked": "^1.1.1",
