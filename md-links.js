@@ -69,3 +69,21 @@ ${chalk.magenta("path :"+element.path)}
         })
     }
     getLinks(path)
+
+    const validateLinks = (link) =>{
+      return new Promise((resolve, reject) => {
+          let fetchLinks = link.map(v=>{
+            return fetch(v.href).then(res =>{
+                v.status=res.statusText;
+                v.statusCode = res.status;
+
+              }).catch((err)=>{
+                v.status = err
+              })
+          })
+          Promise.all(fetchLinks).then(res=>{
+            resolve(link)
+          })
+        })
+    }
+
