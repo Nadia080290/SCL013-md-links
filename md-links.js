@@ -12,7 +12,7 @@ const mdLinks = ( path, choose) => {
           resolve(stats(link))
 
         })
-    } if (choose.validate) {
+    } else if (choose.validate) {
       getLinks(path)
 
         .then(link => {
@@ -21,7 +21,16 @@ const mdLinks = ( path, choose) => {
               resolve(validateLinks)
             })
         })
-    } else {
+    } else if(choose.stats && choose.validate) {
+      getLinks(path)
+        .then(link => {
+         statsAndValidateLinks(link)
+         .then(statsAndValidateLinks => {
+          resolve(statsAndValidateLinks)
+        })
+        })
+
+    }else {
       getLinks(path)
         .then(getLinks => {
           resolve(getLinks)
@@ -92,8 +101,13 @@ const getLinks = (path) => {
       return new Promise((resolve, reject) => {
           let fetchLinks = link.map(v=>{
             return fetch(v.href).then(res =>{
-                v.status=res.statusText;
+              if(res.status >299){
+                v.status="Fail";
                 v.statusCode = res.status;
+              }else {
+                v.status="Ok";
+                v.statusCode = res.status;
+              }
 
               }).catch((err)=>{
                 v.status = err
@@ -110,8 +124,40 @@ const getLinks = (path) => {
       const uniqueLinks = new Set(href);
       return {
         total: link.length,
-        unique: uniqueLinks.size
+        unique: uniqueLinks.size,
+
       };
     };
+
+    const statsAndValidateLinks = (links) => {
+      return new Promise((resolve,reject) => {
+        validate(links).then(links => {
+
+          const statusLinks = links.map(element=> element.status)
+          const totalLinks = links.length;
+
+
+          const okLinks = statusLinks.toString().match(/Ok/g)
+          if(okLinks !== null){
+            okLinks = okLinks.length
+          }else{
+            okLinks =  0
+          }
+          const brokenLinks = statusLinks.toString().match(/Fail/g)
+          if(brokenLinks !== null){
+            brokenLinks = brokenLinks.length
+          }else{
+            brokenLinks =  0
+          }
+            resolve({
+            total: totalLinks,
+            ok: okLinks,
+            broken: brokenLinks
+          })
+        }).catch(err=>{
+          reject(err)
+        })
+      })
+    }
 
     module.exports = { mdLinks,getLinks,  validate, stats}
