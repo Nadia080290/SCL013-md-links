@@ -6,6 +6,7 @@ let path = process.argv[2]
 path = pathNode.resolve(path);
  // path.normalize para normalizar el path en caso se que hayan errores de semántica
 path = pathNode.normalize(path);
+
 let options = {
   stats: false,
   validate: false,
