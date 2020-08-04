@@ -2,12 +2,17 @@
 const chalk = require("chalk");
 const mdLinks = require("./md-links.js");
 const pathN = require('path')
+
+
+
+
 //variable global
 let path = process.argv[2]
  // path.resolve para convertir en absoluta
 path = pathN.resolve(path);
  // path.normalize para normalizar el path en caso se que hayan errores de semántica
 path = pathN.normalize(path);
+
 
 let options = {
   stats: false,

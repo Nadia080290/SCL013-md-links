@@ -6,27 +6,32 @@ const fetch = require('node-fetch');
 
 const mdLinks = ( path, choose) => {
   return new Promise((resolve, reject) => {
-    if (choose.stats) {
+    console.log(choose.stats+'-'+choose.validate)
+    if (choose.stats===true && choose.validate===false) {
+      console.log('*')
       getLinks(path)
         .then(link => {
           resolve(stats(link))
 
         })
-    } else if (choose.validate) {
+    } else if (choose.validate===true && choose.stats===false) {
+      console.log('**')
       getLinks(path)
 
         .then(link => {
           validate(link)
-            .then(validateLinks => {
-              resolve(validateLinks)
+            .then(validate => {
+              resolve(validate)
             })
         })
-    } else if(choose.stats && choose.validate) {
+
+    } else if(choose.stats===true && choose.validate===true) {
+      console.log('***')
       getLinks(path)
         .then(link => {
-         statsAndValidateLinks(link)
-         .then(statsAndValidateLinks => {
-          resolve(statsAndValidateLinks)
+         statsAndValidate(link)
+         .then(statsAndValidate => {
+          resolve(statsAndValidate)
         })
         })
 
@@ -45,7 +50,7 @@ const reaArcMd = (files => {
   return new Promise(( resolve,reject) =>{
     fs.readFile(files,'utf8', (err,data)=>{
       if (err){
-        reject(console.log("!Ouch¡ nose a encontrado este archivo: " + files))
+        reject(console.log("Archivo no encontrado" + files))
       }
       resolve(data)
       //console.log(data);
@@ -98,16 +103,17 @@ const getLinks = (path) => {
     //getLinks(path)
 
     const validate = (link) =>{
-      return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
           let fetchLinks = link.map(v=>{
             return fetch(v.href).then(res =>{
-              if(res.status >299){
+              if(res.status>299){
                 v.status="Fail";
                 v.statusCode = res.status;
-              }else {
+              }else{
                 v.status="Ok";
                 v.statusCode = res.status;
               }
+
 
               }).catch((err)=>{
                 v.status = err
@@ -129,7 +135,8 @@ const getLinks = (path) => {
       };
     };
 
-    const statsAndValidateLinks = (links) => {
+    const statsAndValidate = (links) => {
+
       return new Promise((resolve,reject) => {
         validate(links).then(links => {
 
@@ -137,13 +144,14 @@ const getLinks = (path) => {
           const totalLinks = links.length;
 
 
-          const okLinks = statusLinks.toString().match(/Ok/g)
+          let okLinks = statusLinks.toString().match(/Ok/g)
+          console.log(okLinks)
           if(okLinks !== null){
             okLinks = okLinks.length
           }else{
             okLinks =  0
           }
-          const brokenLinks = statusLinks.toString().match(/Fail/g)
+          let brokenLinks = statusLinks.toString().match(/Fail/g)
           if(brokenLinks !== null){
             brokenLinks = brokenLinks.length
           }else{
