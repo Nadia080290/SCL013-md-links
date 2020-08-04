@@ -1,22 +1,18 @@
 const fs = require ('fs');
 const Marked = require ('marked');
-const fetch = require('fetch');
+//const fetch = require('fetch');
+const fetch = require('node-fetch');
 const pathN = require('path')
 const process = require('process');
 const chalk = require('chalk');
 
 
-let path = process.argv[2]
-path = pathN.resolve(path);
-console.log("mi ruta es: " + path)
-
-
 //lee archivo md
-const reaArcMd = (path => {
+const reaArcMd = (files => {
   return new Promise(( resolve,reject) =>{
-    fs.readFile(path,'utf8', (err,data)=>{
+    fs.readFile(files,'utf8', (err,data)=>{
       if (err){
-        reject(console.log("!Ouch¡ nose a encontrado este archivo: " + path))
+        reject(console.log("!Ouch¡ nose a encontrado este archivo: " + files))
       }
       resolve(data)
       //console.log(data);
@@ -25,6 +21,8 @@ const reaArcMd = (path => {
   })
 
 });
+
+
 const filtLinks = (links) => {
   return links.filter((link) => {
       const prefix = link.href.substring(0, 4);
@@ -38,7 +36,7 @@ const filtLinks = (links) => {
 //obtiene links del archivo md
 const getLinks = (path) => {
     return new Promise ((resolve,reject)=>{
-      reaArcMd(path).then(res =>{
+      reaArcMd(path).then(data =>{
       let links = [];
 
       const renderer = new Marked.Renderer();
@@ -49,17 +47,13 @@ const getLinks = (path) => {
             //
             text:text,
             //
-            path: path})
+            file: path})
         }
 
-        Marked(res,{renderer:renderer})
-        resolve(links)
-        links = filtLinks(links);
-        links.map(element =>{console.log(`
-${chalk.green("href: "+element.href)}
-${chalk.yellow("text :"+element.text)}
-${chalk.magenta("path :"+element.path)}
-        `)});
+        Marked(data,{renderer:renderer})
+
+        resolve(filtLinks(links))
+
 
           })
           .catch(err =>{
@@ -68,31 +62,32 @@ ${chalk.magenta("path :"+element.path)}
           })
         })
     }
-    getLinks(path)
+    //getLinks(path)
 
-    let validate = () => {
-      //let promiseFetch = new Promise((resolve ,reject)=>{
-        getLinks().then((links) => {
-          links.map(e => {
-              return fetch(e.href).then(res => {
-                  // v.status=res.statusText;
-                  if (res.ok) {
-                      console.log(e.href + res.status);
-                      console.log(res.statusText);
-                      // v.statusCode = res.status;
-                  } else {
-                      console.log(e.href + res.status)
-                      console.log(res.statusText);
-                  }
-              }).catch((err) => {
-                  console.log(err.statusText);
-                  // v.status = err
-              });
+    const validateLinks = (link) =>{
+      return new Promise((resolve, reject) => {
+          let fetchLinks = link.map(v=>{
+            return fetch(v.href).then(res =>{
+                v.status=res.statusText;
+                v.statusCode = res.status;
 
-          });
+              }).catch((err)=>{
+                v.status = err
+              })
+          })
+          Promise.all(fetchLinks).then(res=>{
+            resolve(link)
+          })
+        })
+    }
 
-      })
+    const statsLinks = (link) => {
+      let href = link.map(s => s.href);
+      const uniqueLinks = new Set(href);
+      return {
+        total: link.length,
+        unique: uniqueLinks.size
+      };
+    };
 
-  }
-  validate();
-
+    module.exports = { mdLinks,getLinks,  validateLinks, statsLinks}
