@@ -8,6 +8,31 @@ const chalk = require('chalk');
 
 
 
+const mdLinks = ( path, choose) => {
+  return new Promise((resolve, reject) => {
+    if (choose.stats) {
+      getLinks(path)
+        .then(link => {
+          resolve(stats(link))
+
+        })
+    } if (choose.validate) {
+      getLinks(path)
+
+        .then(link => {
+          validate(link)
+            .then(validateLinks => {
+              resolve(validateLinks)
+            })
+        })
+    } else {
+      getLinks(path)
+        .then(getLinks => {
+          resolve(getLinks)
+        })
+    }
+  })
+}
 
 
 //lee archivo md
@@ -93,3 +118,4 @@ const getLinks = (path) => {
       };
     };
 
+    module.exports = { mdLinks,getLinks,  validate, stats}
