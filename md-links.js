@@ -7,6 +7,9 @@ const process = require('process');
 const chalk = require('chalk');
 
 
+
+
+
 //lee archivo md
 const reaArcMd = (files => {
   return new Promise(( resolve,reject) =>{
@@ -64,7 +67,7 @@ const getLinks = (path) => {
     }
     //getLinks(path)
 
-    const validateLinks = (link) =>{
+    const validate = (link) =>{
       return new Promise((resolve, reject) => {
           let fetchLinks = link.map(v=>{
             return fetch(v.href).then(res =>{
@@ -81,7 +84,7 @@ const getLinks = (path) => {
         })
     }
 
-    const statsLinks = (link) => {
+    const stats = (link) => {
       let href = link.map(s => s.href);
       const uniqueLinks = new Set(href);
       return {
@@ -90,4 +93,3 @@ const getLinks = (path) => {
       };
     };
 
-    module.exports = { mdLinks,getLinks,  validateLinks, statsLinks}
