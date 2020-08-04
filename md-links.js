@@ -1,11 +1,7 @@
+#!/usr/bin/env node
 const fs = require ('fs');
 const Marked = require ('marked');
-//const fetch = require('fetch');
 const fetch = require('node-fetch');
-const pathN = require('path')
-const process = require('process');
-const chalk = require('chalk');
-
 
 
 const mdLinks = ( path, choose) => {
