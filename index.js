@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const mdLinks = require("./md-4.js");
+const mdLinks = require("./md-links.js");
 //variable global
 let path = process.argv[2];
 let options = {
