@@ -2,12 +2,17 @@
 const chalk = require("chalk");
 const mdLinks = require("./md-links.js");
 const pathN = require('path')
+
+
+
+
 //variable global
 let path = process.argv[2]
  // path.resolve para convertir en absoluta
 path = pathN.resolve(path);
  // path.normalize para normalizar el path en caso se que hayan errores de semántica
 path = pathN.normalize(path);
+
 
 let options = {
   stats: false,
@@ -27,9 +32,9 @@ mdLinks.mdLinks(path,options).then(res => {
     return console.log(
       `
 
-    ${chalk.bgBlue("Total Links: " + res.total)}
-    ${ "\n" + chalk.bgGreen("Ok Links: " + res.ok)}
-    ${ "\n" + chalk.bgRed("Broken Links: " + res.broken)}`)
+    ${chalk.rgb(180, 61, 81, 1).bold("Total Links: " + res.total)}
+    ${chalk.rgb(230, 116, 80, 1).bold("Ok Links: " + res.ok)}
+    ${chalk.rgb(245, 207, 142, 1).bold("Broken Links: " + res.broken)}`)
   }
   if(options.validate){
     if(res.length === 0){

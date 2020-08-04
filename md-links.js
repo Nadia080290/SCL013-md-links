@@ -6,22 +6,36 @@ const fetch = require('node-fetch');
 
 const mdLinks = ( path, choose) => {
   return new Promise((resolve, reject) => {
-    if (choose.stats) {
+    console.log(choose.stats+'-'+choose.validate)
+    if (choose.stats===true && choose.validate===false) {
+      console.log('*')
       getLinks(path)
         .then(link => {
           resolve(stats(link))
 
         })
-    } if (choose.validate) {
+    } else if (choose.validate===true && choose.stats===false) {
+      console.log('**')
       getLinks(path)
 
         .then(link => {
           validate(link)
-            .then(validateLinks => {
-              resolve(validateLinks)
+            .then(validate => {
+              resolve(validate)
             })
         })
-    } else {
+
+    } else if(choose.stats===true && choose.validate===true) {
+      console.log('***')
+      getLinks(path)
+        .then(link => {
+         statsAndValidate(link)
+         .then(statsAndValidate => {
+          resolve(statsAndValidate)
+        })
+        })
+
+    }else {
       getLinks(path)
         .then(getLinks => {
           resolve(getLinks)
@@ -36,7 +50,7 @@ const reaArcMd = (files => {
   return new Promise(( resolve,reject) =>{
     fs.readFile(files,'utf8', (err,data)=>{
       if (err){
-        reject(console.log("!Ouch¡ nose a encontrado este archivo: " + files))
+        reject(console.log("Archivo no encontrado" + files))
       }
       resolve(data)
       //console.log(data);
@@ -89,11 +103,17 @@ const getLinks = (path) => {
     //getLinks(path)
 
     const validate = (link) =>{
-      return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
           let fetchLinks = link.map(v=>{
             return fetch(v.href).then(res =>{
-                v.status=res.statusText;
+              if(res.status>299){
+                v.status="Fail";
                 v.statusCode = res.status;
+              }else{
+                v.status="Ok";
+                v.statusCode = res.status;
+              }
+
 
               }).catch((err)=>{
                 v.status = err
@@ -110,8 +130,42 @@ const getLinks = (path) => {
       const uniqueLinks = new Set(href);
       return {
         total: link.length,
-        unique: uniqueLinks.size
+        unique: uniqueLinks.size,
+
       };
     };
+
+    const statsAndValidate = (links) => {
+
+      return new Promise((resolve,reject) => {
+        validate(links).then(links => {
+
+          const statusLinks = links.map(element=> element.status)
+          const totalLinks = links.length;
+
+
+          let okLinks = statusLinks.toString().match(/Ok/g)
+          console.log(okLinks)
+          if(okLinks !== null){
+            okLinks = okLinks.length
+          }else{
+            okLinks =  0
+          }
+          let brokenLinks = statusLinks.toString().match(/Fail/g)
+          if(brokenLinks !== null){
+            brokenLinks = brokenLinks.length
+          }else{
+            brokenLinks =  0
+          }
+            resolve({
+            total: totalLinks,
+            ok: okLinks,
+            broken: brokenLinks
+          })
+        }).catch(err=>{
+          reject(err)
+        })
+      })
+    }
 
     module.exports = { mdLinks,getLinks,  validate, stats}
