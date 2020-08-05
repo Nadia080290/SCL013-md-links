@@ -1,4 +1,4 @@
-![logo](/Laboratoria-node.jpg)
+![logo](/img/Laboratoria-node.jpg)
 
 # Markdown Links
 Encuentra todos los links dentro de un archivo Markdown. Funciona cuando se ingresa una ruta relativa/ absoluta llamando directamente  a un archivo Markdown que se encuentre en la posición relativa en la que está el usuario.
@@ -29,7 +29,7 @@ mdLinks("path", {
 
 Se puede utilizar el paquete con una serie de opciones.
 
-- Sin opciones: al ejecutar el paquete sin opciones se genera un arreglo que contine informacion de cada link encontrado en el archivo MD: 
+- Sin opciones: al ejecutar el paquete sin opciones se genera un arreglo que contine informacion de cada link encontrado en el archivo MD:
 
 ![Ej 1](/img/ej-sinopcion.jpg)
 
@@ -74,7 +74,7 @@ El paquete se desarrolló en _JavaScript_, haciendo uso de las siguientes depend
   ![Codigo](/img/paletacolor-codigo.jpg)
 
   ![Imagen](/img/paletadecolor.jpg)
- 
+
 
 - Módulo [figlet](https://www.npmjs.com/package/figlet). Llamar al objeto figlet como una función es una forma abreviada de llamar a la función de texto. Este método le permite crear arte ASCII a partir de texto.
 
