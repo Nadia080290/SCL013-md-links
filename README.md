@@ -1,4 +1,6 @@
-![logo](/img/Laboratoria-node.JPG)
+
+![logo](/img/figlet.JPG)
+
 
 # Markdown Links
 Encuentra todos los links dentro de un archivo Markdown. Funciona cuando se ingresa una ruta relativa/ absoluta llamando directamente  a un archivo Markdown que se encuentre en la posición relativa en la que está el usuario.
@@ -73,7 +75,11 @@ El paquete se desarrolló en _JavaScript_, haciendo uso de las siguientes depend
   Ejemplo:
   ![Codigo](/img/paletacolor-codigo.jpeg)
 
+
   ![Imagen](/img/paletadecolores.jpeg)
+ 
+
+
 
 
 - Módulo [figlet](https://www.npmjs.com/package/figlet). Llamar al objeto figlet como una función es una forma abreviada de llamar a la función de texto. Este método le permite crear arte ASCII a partir de texto.
