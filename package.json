@@ -1,5 +1,5 @@
 {
-  "name": "namd-links",
+  "name": "ayn-md-links",
   "version": "0.1.0",
   "dependencies": {
     "ascii-art-image": "^1.2.2",
@@ -19,9 +19,12 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.6.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint --ext .js ./"
   },
   "repository": {
     "type": "git",
