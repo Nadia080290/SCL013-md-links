@@ -60,7 +60,7 @@ const getLinks = (path) => {
         let links = [];
 
         const renderer = new Marked.Renderer();
-        renderer.link = function (href, text) {
+        renderer.link = function (href, title, text) {
           links.push({
             //
             href: href,
