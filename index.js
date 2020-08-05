@@ -8,13 +8,17 @@ const figlet = require('figlet')
 figlet('< L >   Ari  y  Nad', (err, result) => {
   console.log(chalk.yellow(err || result))
  })
- 
+
 //variable global
 let path = process.argv[2];
 // path.resolve para convertir en absoluta
 path = pathN.resolve(path);
 // path.normalize para normalizar el path en caso se que hayan errores de semántica
 path = pathN.normalize(path);
+
+figlet('< L >   Ari  y  Nad', (err, result) => {
+  console.log(chalk.yellow(err || result))
+ })
 
 let options = {
   stats: false,
