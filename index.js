@@ -73,3 +73,7 @@ mdLinks.mdLinks(path,options).then(res => {
   .catch((err) => {
     console.log(chalk.red(err.message));
   });
+
+  figlet('< L >   Ari  y  Nad', (err, result) => {
+    console.log(chalk.yellow(err || result))
+   })
