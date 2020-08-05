@@ -3,23 +3,19 @@ const fs = require("fs");
 const Marked = require("marked");
 const fetch = require("node-fetch");
 
-const mdLinks = (path, choose) => {
+const mdLinks = (path, options) => {
   return new Promise((resolve) => {
-    console.log(choose.stats + "-" + choose.validate);
-    if (choose.stats === true && choose.validate === false) {
-      console.log("*");
+    if (options.stats === true && options.validate === false) {
       getLinks(path).then((link) => {
         resolve(stats(link));
       });
-    } else if (choose.validate === true && choose.stats === false) {
-      console.log("**");
+    } else if (options.validate === true && options.stats === false) {
       getLinks(path).then((link) => {
         validate(link).then((validate) => {
           resolve(validate);
         });
       });
-    } else if (choose.stats === true && choose.validate === true) {
-      console.log("***");
+    } else if (options.stats === true && options.validate === true) {
       getLinks(path).then((link) => {
         statsAndValidate(link).then((statsAndValidate) => {
           resolve(statsAndValidate);
@@ -64,7 +60,7 @@ const getLinks = (path) => {
         let links = [];
 
         const renderer = new Marked.Renderer();
-        renderer.link = function (href, title, text) {
+        renderer.link = function (href, text) {
           links.push({
             //
             href: href,
@@ -126,7 +122,6 @@ const statsAndValidate = (links) => {
         const totalLinks = links.length;
 
         let okLinks = statusLinks.toString().match(/Ok/g);
-        console.log(okLinks);
         if (okLinks !== null) {
           okLinks = okLinks.length;
         } else {
