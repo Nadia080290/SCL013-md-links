@@ -2,9 +2,7 @@
 const chalk = require("chalk");
 const mdLinks = require("./md-links.js");
 const pathN = require('path')
-
-
-
+const figlet = require('figlet')
 
 //variable global
 let path = process.argv[2]
@@ -72,3 +70,8 @@ mdLinks.mdLinks(path,options).then(res => {
 }).catch(err => {
   console.log(chalk.red(err.message))
 });
+
+
+figlet('< L >   Ari  y  Nad', (err, result) => {
+  console.log(chalk.yellow(err || result))
+ })
