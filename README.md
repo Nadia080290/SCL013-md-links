@@ -1,4 +1,4 @@
-![logo](/img/Laboratoria-node.jpg)
+![logo](/img/Laboratoria-node.JPG)
 
 # Markdown Links
 Encuentra todos los links dentro de un archivo Markdown. Funciona cuando se ingresa una ruta relativa/ absoluta llamando directamente  a un archivo Markdown que se encuentre en la posición relativa en la que está el usuario.
@@ -31,19 +31,19 @@ Se puede utilizar el paquete con una serie de opciones.
 
 - Sin opciones: al ejecutar el paquete sin opciones se genera un arreglo que contine informacion de cada link encontrado en el archivo MD:
 
-![Ej 1](/img/ej-sinopcion.jpg)
+![Ej 1](/img/ej-sinopcion.JPG)
 
 - Validate: al ejecutar el paquete con la opción validate --v o --validate, se genera el arreglo anterior, agregando además, para cada link encontrado el status de cada uno de ellos, mediante una llamada http.
 
-![Ej 2](/img/ej-validate.jpg)
+![Ej 2](/img/ej-validate.JPG)
 
 - Stats: al ejecutar el paquete con la opción stats --s o --stats, se genera un objeto con el total de link y con la cantidad de links únicos encontrados dentro del archivo(s).
 
-![Ej 3](/img/ej-stats.jpg)
+![Ej 3](/img/ej-stats.JPG)
 
 - Stats y Validate: al ejecutar el paquete con las opciones --s --v o --stats --validate, se genera un objeto con el total de link, con la cantidad de links que se encuentran "OK" y la cantidad de los links que se encuentran "Broken".
 
-![Ej 4](/img/ej-syv.jpg)
+![Ej 4](/img/ej-syv.JPG)
 
 
 ## Preámbulo 💥
@@ -71,14 +71,14 @@ El paquete se desarrolló en _JavaScript_, haciendo uso de las siguientes depend
 
 - Módulo [chalk](https://github.com/chalk/chalk). La misma se utilizò para colocar colores a las respuestas del paquete por consola.
   Ejemplo:
-  ![Codigo](/img/paletacolor-codigo.jpg)
+  ![Codigo](/img/paletacolor-codigo.jpeg)
 
-  ![Imagen](/img/paletadecolor.jpg)
+  ![Imagen](/img/paletadecolores.jpeg)
 
 
 - Módulo [figlet](https://www.npmjs.com/package/figlet). Llamar al objeto figlet como una función es una forma abreviada de llamar a la función de texto. Este método le permite crear arte ASCII a partir de texto.
 
-![Consola](/img/figlet.jpg)
+![Consola](/img/figlet.JPG)
 
 - Módulo [marked](https://www.npmjs.com/package/marked). Compilador de bajo nivel para analizar el marcado sin almacenar en caché o bloquear durante largos períodos de tiempo
 
