@@ -11,6 +11,10 @@ path = pathN.resolve(path);
 // path.normalize para normalizar el path en caso se que hayan errores de semántica
 path = pathN.normalize(path);
 
+figlet('< L >   Ari  y  Nad', (err, result) => {
+  console.log(chalk.yellow(err || result))
+ })
+
 let options = {
   stats: false,
   validate: false,
@@ -74,6 +78,4 @@ mdLinks.mdLinks(path,options).then(res => {
     console.log(chalk.red(err.message));
   });
 
-  figlet('< L >   Ari  y  Nad', (err, result) => {
-    console.log(chalk.yellow(err || result))
-   })
+
