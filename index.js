@@ -4,6 +4,11 @@ const mdLinks = require("./md-links.js");
 const pathN = require('path')
 const figlet = require('figlet')
 
+
+figlet('< L >   Ari  y  Nad', (err, result) => {
+  console.log(chalk.yellow(err || result))
+ })
+ 
 //variable global
 let path = process.argv[2];
 // path.resolve para convertir en absoluta
@@ -74,6 +79,3 @@ mdLinks.mdLinks(path,options).then(res => {
     console.log(chalk.red(err.message));
   });
 
-  figlet('< L >   Ari  y  Nad', (err, result) => {
-    console.log(chalk.yellow(err || result))
-   })
