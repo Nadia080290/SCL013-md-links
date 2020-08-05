@@ -2,9 +2,7 @@
 const chalk = require("chalk");
 const mdLinks = require("./md-links.js");
 const pathN = require('path')
-
-
-
+const figlet = require('figlet')
 
 //variable global
 let path = process.argv[2]
@@ -18,7 +16,6 @@ let options = {
   stats: false,
   validate: false,
 }
-
 process.argv.forEach(element =>{
  if( element == "--stats" || element == "--s" ){
    options.stats = true
@@ -27,8 +24,6 @@ if(element == "--validate" || element == "--v"){
   options.validate = true
 }
 })
-
-
 
 mdLinks.mdLinks(path,options).then(res => {
   if(options.validate && options.stats){
@@ -75,3 +70,8 @@ mdLinks.mdLinks(path,options).then(res => {
 }).catch(err => {
   console.log(chalk.red(err.message))
 });
+
+
+figlet('< L >   Ari  y  Nad', (err, result) => {
+  console.log(chalk.yellow(err || result))
+ })

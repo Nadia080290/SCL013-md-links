@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "dependencies": {
     "ascii-art-image": "^1.2.2",
+    "canvas": "^2.6.1",
     "chalk": "^4.1.0",
     "fetch": "^1.1.0",
+    "figlet": "^1.5.0",
     "filehound": "^1.17.4",
     "markdown-link-extractor": "^1.2.3",
     "marked": "^1.1.1",
