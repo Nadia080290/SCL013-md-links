@@ -4,7 +4,7 @@ const Marked = require("marked");
 const fetch = require("node-fetch");
 
 const mdLinks = (path, choose) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     console.log(choose.stats + "-" + choose.validate);
     if (choose.stats === true && choose.validate === false) {
       console.log("*");
@@ -87,7 +87,7 @@ const getLinks = (path) => {
 //getLinks(path)
 
 const validate = (link) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let fetchLinks = link.map((v) => {
       return fetch(v.href)
         .then((res) => {
@@ -103,7 +103,7 @@ const validate = (link) => {
           v.status = err;
         });
     });
-    Promise.all(fetchLinks).then((res) => {
+    Promise.all(fetchLinks).then(() => {
       resolve(link);
     });
   });
