@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 const chalk = require("chalk");
 const mdLinks = require("./md-links.js");
-const pathN = require("path");
+const pathN = require('path')
+const figlet = require('figlet')
 
 //variable global
 let path = process.argv[2];
@@ -13,23 +14,20 @@ path = pathN.normalize(path);
 let options = {
   stats: false,
   validate: false,
-};
+}
+process.argv.forEach(element =>{
+ if( element == "--stats" || element == "--s" ){
+   options.stats = true
+ }
+if(element == "--validate" || element == "--v"){
+  options.validate = true
+}
+})
 
-process.argv.forEach((element) => {
-  if (element == "--stats" || element == "--s") {
-    options.stats = true;
-  }
-  if (element == "--validate" || element == "--v") {
-    options.validate = true;
-  }
-});
-
-mdLinks
-  .mdLinks(path, options)
-  .then((res) => {
-    if (options.validate && options.stats) {
-      return console.log(
-        `
+mdLinks.mdLinks(path,options).then(res => {
+  if(options.validate && options.stats){
+    return console.log(
+      `
 
     ${chalk.rgb(180, 61, 81, 1).bold("Total Links: " + res.total)}
     ${chalk.rgb(230, 116, 80, 1).bold("Ok Links: " + res.ok)}
